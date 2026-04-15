@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .calculator {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .display {
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            text-align: right;
+            margin-bottom: 10px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        td {
+            padding: 2px;
+        }
+        button {
+            width: 100%;
+            height: 50px;
+            font-size: 18px;
+        }
+        .number {
+            background-color: #e0e0e0;
+        }
+        .operator {
+            background-color: #ffa500;
+        }
+        .equals {
+            background-color: #ffa500;
+        }
+        .clear {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+    <div class="calculator">
+        <input type="text" class="display" id="display" readonly>
+        <table>
+            <tr>
+                <td><button class="clear" onclick="clearDisplay()">C</button></td>
+                <td><button class="clear" onclick="undoLast()">⌫</button></td>
+                <td><button class="operator" onclick="appendToDisplay('/')">÷</button></td>
+                <td><button class="operator" onclick="appendToDisplay('*')">×</button></td>
+            </tr>
+            <tr>
+                <td><button class="number" onclick="appendToDisplay('7')">7</button></td>
+                <td><button class="number" onclick="appendToDisplay('8')">8</button></td>
+                <td><button class="number" onclick="appendToDisplay('9')">9</button></td>
+                <td><button class="operator" onclick="appendToDisplay('%')">%</button></td>
+            </tr>
+            <tr>
+                <td><button class="number" onclick="appendToDisplay('4')">4</button></td>
+                <td><button class="number" onclick="appendToDisplay('5')">5</button></td>
+                <td><button class="number" onclick="appendToDisplay('6')">6</button></td>
+                <td><button class="operator" onclick="appendToDisplay('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="number" onclick="appendToDisplay('1')">1</button></td>
+                <td><button class="number" onclick="appendToDisplay('2')">2</button></td>
+                <td><button class="number" onclick="appendToDisplay('3')">3</button></td>
+                <td><button class="operator" onclick="appendToDisplay('+')">+</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="number" onclick="appendToDisplay('0')">0</button></td>
+                <td><button class="number" onclick="appendToDisplay('.')">.</button></td>
+                <td><button class="equals" onclick="calculate()">=</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        // Get the display element
+        let display = document.getElementById('display');
+
+        // Function to add value to display
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        // Function to clear the display
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        // Function to remove the last character
+        function undoLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        // Function to calculate the result
+        function calculate() {
+            try {
+                // Replace percent signs with division by 100
+                const expression = display.value.replace(/%/g, '/100');
+                display.value = eval(expression);
+            } catch (error) {
+                // If there's an error, show 'Error'
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
